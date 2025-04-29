@@ -3,23 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cost Savings Calculator</title>
+    <title>ISP Savings Calculator</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
     <style>
+        /* Brand Colors */
+        :root {
+            --digital-yellow: #D6FC51;
+            --electric-blue: #0066FF;
+            --cloud-grey: #EEF2F6;
+            --teal: #58DBB9;
+            --ash: #3D4550;
+            --jade: #4EBAA1;
+            --slate: #20242A;
+            --pewter: #2B3038;
+            --ice-grey: #A5BAC9;
+            
+            --primary-color: var(--electric-blue);
+            --secondary-color: var(--teal);
+            --background-color: var(--cloud-grey);
+            --text-color: var(--slate);
+            --highlight-color: var(--digital-yellow);
+            --border-color: var(--ice-grey);
+        }
+
         /* General Styles */
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
-            color: #333;
+            color: var(--text-color);
+            background-color: var(--background-color);
         }
 
         .savings-container {
-            background-color: #f9f9f9;
             padding: 20px 0;
         }
 
         h2, h3 {
             font-weight: 600;
+            color: var(--ash);
         }
 
         /* Input Sliders */
@@ -39,6 +60,7 @@
             display: block;
             margin-bottom: 10px;
             font-weight: 500;
+            color: var(--ash);
         }
 
         .slidecontainer {
@@ -50,7 +72,7 @@
             -webkit-appearance: none;
             width: 100%;
             height: 4px;
-            background: #e0e0e0;
+            background: var(--border-color);
             outline: none;
             border-radius: 2px;
         }
@@ -61,7 +83,7 @@
             width: 16px;
             height: 16px;
             border-radius: 50%;
-            background: #4285F4;
+            background: var(--primary-color);
             cursor: pointer;
         }
 
@@ -69,7 +91,7 @@
             width: 16px;
             height: 16px;
             border-radius: 50%;
-            background: #4285F4;
+            background: var(--primary-color);
             cursor: pointer;
         }
 
@@ -85,7 +107,7 @@
             top: 0;
             left: 0;
             height: 4px;
-            background-color: #4285F4;
+            background-color: var(--primary-color);
             border-radius: 2px;
         }
 
@@ -96,20 +118,20 @@
 
         .end-points p {
             font-size: 0.8rem;
-            color: #666;
+            color: var(--ash);
             margin: 0;
         }
 
         /* Results Section */
         .results h3 {
             margin-bottom: 20px;
-            border-bottom: 1px solid #e0e0e0;
+            border-bottom: 1px solid var(--border-color);
             padding-bottom: 10px;
         }
 
         .results-wrapper {
             padding: 12px 0;
-            border-bottom: 1px solid #f0f0f0;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .results-wrapper p {
@@ -125,11 +147,14 @@
         .total-savings {
             margin-top: 10px;
             font-size: 1.2rem;
+            background-color: var(--highlight-color);
+            padding: 10px;
+            border-radius: 5px;
         }
 
         .total-savings .result-input p {
             font-size: 1.4rem;
-            color: #4285F4;
+            color: var(--slate);
         }
 
         /* Accordion */
@@ -179,13 +204,54 @@
         /* Disclaimer */
         .disclaimer {
             font-size: 0.8rem;
-            color: #777;
+            color: var(--ash);
             margin-top: 20px;
+        }
+
+        /* ROI Timeline */
+        .roi-timeline {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .roi-timeline h3 {
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .timeline-bar {
+            height: 40px;
+            background-color: var(--cloud-grey);
+            position: relative;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .timeline-progress {
+            height: 100%;
+            background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
+            border-radius: 5px;
+        }
+
+        .timeline-markers {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+        }
+
+        .timeline-markers span {
+            font-size: 0.8rem;
+            color: var(--ash);
         }
 
         /* Responsive Adjustments */
         @media (max-width: 991px) {
-            .col-lg-5 {
+            .col-lg-5, .col-lg-6 {
                 margin-top: 20px;
             }
         }
@@ -196,36 +262,37 @@
         <div class="container py-4">
             <div class="row mt-4">
                 <div class="col-12">
-                    <h2>Cost Savings Calculator</h2>
+                    <h2>ISP Savings & Revenue Calculator</h2>
+                    <p>Estimate potential cost savings and revenue enhancements for your ISP operations</p>
                 </div>
             </div>
             <div class="row mt-5 d-flex justify-content-between">
-                <div class="col-12 col-lg-7">
+                <div class="col-12 col-lg-6">
                     <div class="content-wrapper inputs">
-                        <!-- Cases -->
+                        <!-- Technical support calls -->
                         <div class="input-wrapper cases">
                             <div class="slidecontainer">
-                                <label>Cases per month</label>
-                                <input type="range" min="1000" max="100000" value="10000" step="500" class="slider cases-input" id="casesRange">
-                                <span id="casesVal" class="range-value cases-value">10,000</span>
+                                <label>Technical support calls per month</label>
+                                <input type="range" min="10000" max="500000" value="50000" step="5000" class="slider cases-input" id="casesRange">
+                                <span id="casesVal" class="range-value cases-value">50,000</span>
                                 <div class="overlay"></div>
                                 <div class="end-points d-flex justify-content-between">
-                                    <p>1,000</p>
-                                    <p>100,000</p>
+                                    <p>10,000</p>
+                                    <p>500,000</p>
                                 </div>
                             </div>
                         </div>
                         
-                        <!-- Call costs per hour -->
+                        <!-- Support call costs -->
                         <div class="input-wrapper calls">
                             <div class="slidecontainer">
-                                <label>Call costs per hour</label>
-                                <input type="range" min="5" max="50" value="25" step="1" class="slider calls-input" id="callsRange">
-                                <span id="callsVal" class="range-value calls-value">25</span>
+                                <label>Support call costs (per call)</label>
+                                <input type="range" min="15" max="35" value="25" step="1" class="slider calls-input" id="callsRange">
+                                <span id="callsVal" class="range-value calls-value">$25</span>
                                 <div class="overlay"></div>
                                 <div class="end-points d-flex justify-content-between">
-                                    <p>$5</p>
-                                    <p>$50</p>
+                                    <p>$15</p>
+                                    <p>$35</p>
                                 </div>
                             </div>
                         </div>
@@ -248,12 +315,12 @@
                         <div class="input-wrapper fcr-percentage">
                             <div class="slidecontainer">
                                 <label>First contact resolution percentage</label>
-                                <input type="range" min="0" max="100" value="60" step="1" class="slider fcr-percentage-input" id="fcrRange">
-                                <span id="fcrVal" class="range-value fcr-percentage-value">60</span>
+                                <input type="range" min="50" max="90" value="70" step="1" class="slider fcr-percentage-input" id="fcrRange">
+                                <span id="fcrVal" class="range-value fcr-percentage-value">70%</span>
                                 <div class="overlay"></div>
                                 <div class="end-points d-flex justify-content-between">
-                                    <p>0%</p>
-                                    <p>100%</p>
+                                    <p>50%</p>
+                                    <p>90%</p>
                                 </div>
                             </div>
                         </div>
@@ -262,12 +329,12 @@
                         <div class="input-wrapper tr-percentage">
                             <div class="slidecontainer">
                                 <label>Truck roll percentage</label>
-                                <input type="range" min="0" max="100" value="15" step="1" class="slider tr-percentage-input" id="trPercentRange">
-                                <span id="trPercentVal" class="range-value tr-percentage-value">15</span>
+                                <input type="range" min="5" max="25" value="15" step="1" class="slider tr-percentage-input" id="trPercentRange">
+                                <span id="trPercentVal" class="range-value tr-percentage-value">15%</span>
                                 <div class="overlay"></div>
                                 <div class="end-points d-flex justify-content-between">
-                                    <p>0%</p>
-                                    <p>100%</p>
+                                    <p>5%</p>
+                                    <p>25%</p>
                                 </div>
                             </div>
                         </div>
@@ -276,12 +343,54 @@
                         <div class="input-wrapper tr-cost">
                             <div class="slidecontainer">
                                 <label>Truck roll cost</label>
-                                <input type="range" min="50" max="500" value="150" step="1" class="slider tr-cost-input" id="trCostRange">
-                                <span id="trCostVal" class="range-value tr-cost-value">150</span>
+                                <input type="range" min="75" max="500" value="150" step="5" class="slider tr-cost-input" id="trCostRange">
+                                <span id="trCostVal" class="range-value tr-cost-value">$150</span>
                                 <div class="overlay"></div>
                                 <div class="end-points d-flex justify-content-between">
-                                    <p>$50</p>
+                                    <p>$75</p>
                                     <p>$500</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Customer lifetime value -->
+                        <div class="input-wrapper clv">
+                            <div class="slidecontainer">
+                                <label>Customer lifetime value</label>
+                                <input type="range" min="500" max="2000" value="1000" step="50" class="slider clv-input" id="clvRange">
+                                <span id="clvVal" class="range-value clv-value">$1,000</span>
+                                <div class="overlay"></div>
+                                <div class="end-points d-flex justify-content-between">
+                                    <p>$500</p>
+                                    <p>$2,000</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Monthly churn rate -->
+                        <div class="input-wrapper churn">
+                            <div class="slidecontainer">
+                                <label>Monthly churn rate</label>
+                                <input type="range" min="0.5" max="5" value="2" step="0.1" class="slider churn-input" id="churnRange">
+                                <span id="churnVal" class="range-value churn-value">2%</span>
+                                <div class="overlay"></div>
+                                <div class="end-points d-flex justify-content-between">
+                                    <p>0.5%</p>
+                                    <p>5%</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Current mesh pod take rate -->
+                        <div class="input-wrapper mesh">
+                            <div class="slidecontainer">
+                                <label>Current mesh pod take rate</label>
+                                <input type="range" min="0" max="30" value="10" step="1" class="slider mesh-input" id="meshRange">
+                                <span id="meshVal" class="range-value mesh-value">10%</span>
+                                <div class="overlay"></div>
+                                <div class="end-points d-flex justify-content-between">
+                                    <p>0%</p>
+                                    <p>30%</p>
                                 </div>
                             </div>
                         </div>
@@ -289,75 +398,118 @@
                     
                     <div class="disclaimer">
                         <p>
-                            Disclaimer: These assumptions and calculations are intended as an indication of savings potential only. They should not be taken as a guarantee.
+                            Disclaimer: These assumptions and calculations are based on verified industry benchmarks but should be considered as estimates only. They should not be taken as a guarantee.
                         </p>
                     </div>
                 </div>
                 
-                <div class="col-12 col-lg-5">
+                <div class="col-12 col-lg-6">
                     <div class="content-wrapper results">
                         <h3>
-                            Potential Savings
+                            Potential Annual Savings & Revenue
                         </h3>
                         
                         <!-- Call deflections -->
                         <div class="results-wrapper d-flex justify-content-between align-items-center">
-                            <p>Call deflections</p>
+                            <p>Call deflections (83.49% with 30% adoption)</p>
                             <div id="callsDeflections" class="result-input">
-                                <p>$<span>90,000</span></p>
+                                <p>$<span>0</span></p>
                             </div>  
                         </div>
                         
                         <!-- AHT improvement -->
                         <div class="results-wrapper d-flex justify-content-between align-items-center">
-                            <p>AHT improvement</p>
+                            <p>AHT improvement (18.75% reduction)</p>
                             <div id="ahtImprovement" class="result-input">
-                                <p>$<span>175,000</span></p>
+                                <p>$<span>0</span></p>
                             </div>  
                         </div>
                         
                         <!-- FCR improvement -->
                         <div class="results-wrapper d-flex justify-content-between align-items-center">
-                            <p>FCR improvement</p>
+                            <p>FCR improvement (24.03% increase)</p>
                             <div id="fcrImprovement" class="result-input">
-                                <p>$<span>120,000</span></p>
+                                <p>$<span>0</span></p>
                             </div>  
                         </div>
                         
                         <!-- Reduced truck rolls -->
-                        <div class="results-wrapper reduced-truck-rolls d-flex justify-content-between align-items-center">
-                            <p>Reduced truck rolls</p>
+                        <div class="results-wrapper d-flex justify-content-between align-items-center">
+                            <p>Reduced truck rolls (20.66% reduction)</p>
                             <div id="reducedTR" class="result-input">
-                                <p>$<span>405,000</span></p>
+                                <p>$<span>0</span></p>
+                            </div>  
+                        </div>
+                        
+                        <!-- Hardware optimization -->
+                        <div class="results-wrapper d-flex justify-content-between align-items-center">
+                            <p>Hardware optimization (8.78% reduction)</p>
+                            <div id="hardwareOptimization" class="result-input">
+                                <p>$<span>0</span></p>
+                            </div>  
+                        </div>
+                        
+                        <!-- Revenue enhancement -->
+                        <div class="results-wrapper d-flex justify-content-between align-items-center">
+                            <p>Revenue enhancement (16.7% take rate improvement)</p>
+                            <div id="revenueEnhancement" class="result-input">
+                                <p>$<span>0</span></p>
+                            </div>  
+                        </div>
+                        
+                        <!-- Churn reduction -->
+                        <div class="results-wrapper d-flex justify-content-between align-items-center">
+                            <p>Churn reduction (6.66% improvement)</p>
+                            <div id="churnReduction" class="result-input">
+                                <p>$<span>0</span></p>
                             </div>  
                         </div>
                         
                         <!-- Total savings -->
                         <div class="results-wrapper total-savings d-flex justify-content-between align-items-center">
-                            <p><strong>Total savings</strong></p>
+                            <p><strong>Total annual impact</strong></p>
                             <div id="totalSavings" class="result-input">
-                                <p><strong>$<span>790,000</span></strong></p>
+                                <p><strong>$<span>0</span></strong></p>
                             </div>  
                         </div>
                     </div>
                     
-                    <div class="accordion-wrapper justify-content-between">
+                    <!-- ROI Timeline -->
+                    <div class="roi-timeline">
+                        <h3>ROI Timeline</h3>
+                        <div class="timeline-bar">
+                            <div class="timeline-progress" style="width: 0%"></div>
+                        </div>
+                        <div class="timeline-markers">
+                            <span>Month 1</span>
+                            <span>Month 3</span>
+                            <span>Month 6</span>
+                            <span>Month 9</span>
+                            <span>Year 1</span>
+                        </div>
+                        <p id="roiMessage">Adjust your parameters to see the ROI timeline.</p>
+                    </div>
+                    
+                    <div class="accordion-wrapper justify-content-between mt-4">
                         <div class="accordion-item-wrapper">
                             <div class="accordion-item-title-wrapper">
-                                <h3>Methodology</h3>
+                                <h3>Calculation Methodology</h3>
                             </div>
                             <div class="accordion-item-body">
                                 <div class="accordion-item-body-intro">
                                     <p>
-                                        Our calculations are based on certain assumptions. We'd be happy to adjust these to your liking and send you a customized report if you'd prefer.
+                                        Our calculations are based on verified industry benchmarks. These represent the typical results achieved by ISPs implementing advanced support optimization solutions.
                                     </p>
                                 </div>
                                 <div class="accordion-item-body-inner">
-                                    <p>Self-care app usage: <strong>30% of cases</strong></p>
-                                    <p>Self-care resolution: <strong>30% of uses</strong></p>
-                                    <p>Assisted care time saved: <strong>5 minutes per case</strong></p> 
-                                    <p>Repeat call reduction: <strong>30%</strong></p> 
-                                    <p>Truck rolls avoided: <strong>15%</strong></p> 
+                                    <p>Support call deflection rate: <strong>83.49% with 30% adoption</strong></p>
+                                    <p>AHT improvement: <strong>18.75% reduction</strong></p>
+                                    <p>FCR improvement: <strong>24.03% increase</strong></p>
+                                    <p>Truck roll reduction: <strong>20.66% fewer dispatches</strong></p>
+                                    <p>Router replacement reduction: <strong>8.78% decrease</strong></p>
+                                    <p>Installation certification time: <strong>4 minutes 21 seconds</strong></p>
+                                    <p>Mesh pod take rate increase: <strong>16.7% improvement</strong></p>
+                                    <p>Churn reduction: <strong>6.66% improvement in retention</strong></p>
                                 </div>
                             </div>
                         </div>
@@ -376,6 +528,9 @@
             const fcrSlider = document.getElementById('fcrRange');
             const trPercentSlider = document.getElementById('trPercentRange');
             const trCostSlider = document.getElementById('trCostRange');
+            const clvSlider = document.getElementById('clvRange');
+            const churnSlider = document.getElementById('churnRange');
+            const meshSlider = document.getElementById('meshRange');
             
             // Get value display elements
             const casesVal = document.getElementById('casesVal');
@@ -384,13 +539,23 @@
             const fcrVal = document.getElementById('fcrVal');
             const trPercentVal = document.getElementById('trPercentVal');
             const trCostVal = document.getElementById('trCostVal');
+            const clvVal = document.getElementById('clvVal');
+            const churnVal = document.getElementById('churnVal');
+            const meshVal = document.getElementById('meshVal');
             
             // Get result elements
             const callsDeflections = document.querySelector('#callsDeflections span');
             const ahtImprovement = document.querySelector('#ahtImprovement span');
             const fcrImprovement = document.querySelector('#fcrImprovement span');
             const reducedTR = document.querySelector('#reducedTR span');
+            const hardwareOptimization = document.querySelector('#hardwareOptimization span');
+            const revenueEnhancement = document.querySelector('#revenueEnhancement span');
+            const churnReduction = document.querySelector('#churnReduction span');
             const totalSavings = document.querySelector('#totalSavings span');
+            
+            // ROI Timeline elements
+            const timelineProgress = document.querySelector('.timeline-progress');
+            const roiMessage = document.getElementById('roiMessage');
             
             // Initialize slider overlays
             updateSliderOverlay(casesSlider);
@@ -399,6 +564,9 @@
             updateSliderOverlay(fcrSlider);
             updateSliderOverlay(trPercentSlider);
             updateSliderOverlay(trCostSlider);
+            updateSliderOverlay(clvSlider);
+            updateSliderOverlay(churnSlider);
+            updateSliderOverlay(meshSlider);
             
             // Add event listeners to sliders
             casesSlider.addEventListener('input', function() {
@@ -408,7 +576,7 @@
             });
             
             callsSlider.addEventListener('input', function() {
-                updateSliderValue(this, callsVal);
+                updateSliderValue(this, callsVal, false, true);
                 updateSliderOverlay(this);
                 calculateSavings();
             });
@@ -420,19 +588,37 @@
             });
             
             fcrSlider.addEventListener('input', function() {
-                updateSliderValue(this, fcrVal);
+                updateSliderValue(this, fcrVal, false, false, true);
                 updateSliderOverlay(this);
                 calculateSavings();
             });
             
             trPercentSlider.addEventListener('input', function() {
-                updateSliderValue(this, trPercentVal);
+                updateSliderValue(this, trPercentVal, false, false, true);
                 updateSliderOverlay(this);
                 calculateSavings();
             });
             
             trCostSlider.addEventListener('input', function() {
-                updateSliderValue(this, trCostVal);
+                updateSliderValue(this, trCostVal, false, true);
+                updateSliderOverlay(this);
+                calculateSavings();
+            });
+            
+            clvSlider.addEventListener('input', function() {
+                updateSliderValue(this, clvVal, false, true);
+                updateSliderOverlay(this);
+                calculateSavings();
+            });
+            
+            churnSlider.addEventListener('input', function() {
+                updateSliderValue(this, churnVal, false, false, true);
+                updateSliderOverlay(this);
+                calculateSavings();
+            });
+            
+            meshSlider.addEventListener('input', function() {
+                updateSliderValue(this, meshVal, false, false, true);
                 updateSliderOverlay(this);
                 calculateSavings();
             });
@@ -454,11 +640,19 @@
             calculateSavings();
             
             // Functions
-            function updateSliderValue(slider, valueElement, formatThousands = false) {
+            function updateSliderValue(slider, valueElement, formatThousands = false, isCurrency = false, isPercentage = false) {
                 let value = slider.value;
                 
                 if (formatThousands) {
                     value = Number(value).toLocaleString();
+                }
+                
+                if (isCurrency) {
+                    value = '$' + value;
+                }
+                
+                if (isPercentage) {
+                    value = value + '%';
                 }
                 
                 valueElement.textContent = value;
@@ -487,42 +681,96 @@
                 const fcr = parseInt(fcrSlider.value);
                 const trPercent = parseInt(trPercentSlider.value);
                 const trCost = parseInt(trCostSlider.value);
+                const clv = parseInt(clvSlider.value);
+                const churn = parseFloat(churnSlider.value);
+                const meshRate = parseInt(meshSlider.value);
                 
-                // Assumptions (based on methodology)
-                const selfCareUsage = 0.3; // 30% of cases
-                const selfCareResolution = 0.3; // 30% of uses
-                const assistedTimeSaved = 5; // 5 minutes per case
-                const repeatCallReduction = 0.3; // 30%
-                const truckRollsAvoided = 0.15; // 15%
+                // Industry benchmark assumptions
+                const selfCareDeflectionRate = 0.8349; // 83.49% with 30% adoption
+                const ahtImprovement = 0.1875; // 18.75% reduction
+                const fcrImprovement = 0.2403; // 24.03% increase
+                const truckRollReduction = 0.2066; // 20.66% reduction
+                const routerReplacementReduction = 0.0878; // 8.78% decrease
+                const meshTakeRateImprovement = 0.167; // 16.7% improvement
+                const churnImprovement = 0.0666; // 6.66% improvement
                 
-                // Calculate call deflections savings
-                const deflectedCalls = cases * selfCareUsage * selfCareResolution;
-                const callDeflectionsSavings = deflectedCalls * (callCost * (aht / 60));
+                // Constants
+                const averageRouterCost = 120; // Average cost of router hardware
+                const meshPodProfit = 75; // Profit per mesh pod sold
+                const adoptionRate = 0.30; // Self-care adoption rate (30%)
+                const annualMultiplier = 12; // Convert monthly to annual
                 
-                // Calculate AHT improvement savings
+                // Calculate call deflections savings (annually)
+                const deflectedCalls = cases * adoptionRate * selfCareDeflectionRate;
+                const callDeflectionsSavings = deflectedCalls * callCost * annualMultiplier;
+                
+                // Calculate AHT improvement savings (annually)
                 const nonDeflectedCalls = cases - deflectedCalls;
-                const ahtSavings = nonDeflectedCalls * (callCost * (assistedTimeSaved / 60));
+                const ahtSavings = nonDeflectedCalls * callCost * ahtImprovement * annualMultiplier;
                 
-                // Calculate FCR improvement savings
-                const currentRepeatCalls = (cases * (1 - (fcr / 100)));
-                const improvedRepeatCalls = currentRepeatCalls * (1 - repeatCallReduction);
-                const reducedRepeatCalls = currentRepeatCalls - improvedRepeatCalls;
-                const fcrSavings = reducedRepeatCalls * (callCost * (aht / 60));
+                // Calculate FCR improvement savings (annually)
+                const currentRepeatCalls = cases * (1 - (fcr / 100));
+                const improvedFcr = fcr * (1 + fcrImprovement);
+                const newRepeatCalls = cases * (1 - (improvedFcr / 100));
+                const reducedRepeatCalls = currentRepeatCalls - newRepeatCalls;
+                const fcrSavings = reducedRepeatCalls * callCost * annualMultiplier;
                 
-                // Calculate truck roll savings
+                // Calculate truck roll savings (annually)
                 const currentTruckRolls = cases * (trPercent / 100);
-                const reducedTruckRolls = currentTruckRolls * truckRollsAvoided;
-                const trSavings = reducedTruckRolls * trCost;
+                const reducedTruckRolls = currentTruckRolls * truckRollReduction;
+                const trSavings = reducedTruckRolls * trCost * annualMultiplier;
+                
+                // Calculate hardware optimization savings (annually)
+                const routerReplacements = currentTruckRolls * 0.35; // Assume 35% of truck rolls involve router replacement
+                const reducedRouterReplacements = routerReplacements * routerReplacementReduction;
+                const hardwareSavings = reducedRouterReplacements * averageRouterCost * annualMultiplier;
+                
+                // Calculate revenue enhancement from increased mesh pod sales (annually)
+                const currentMeshSales = cases * (meshRate / 100); // Current monthly mesh pod sales
+                const improvedMeshSales = currentMeshSales * (1 + meshTakeRateImprovement);
+                const additionalMeshSales = improvedMeshSales - currentMeshSales;
+                const revenueSavings = additionalMeshSales * meshPodProfit * annualMultiplier;
+                
+                // Calculate churn reduction savings (annually)
+                const monthlySubs = cases * 3; // Estimate 3 subscribers per monthly call volume
+                const currentMonthlyChurn = monthlySubs * (churn / 100);
+                const improvedMonthlyChurn = currentMonthlyChurn * (1 - churnImprovement);
+                const reducedChurn = currentMonthlyChurn - improvedMonthlyChurn;
+                const churnSavings = reducedChurn * clv;
                 
                 // Calculate total savings
-                const total = callDeflectionsSavings + ahtSavings + fcrSavings + trSavings;
+                const total = callDeflectionsSavings + ahtSavings + fcrSavings + trSavings + hardwareSavings + revenueSavings + churnSavings;
                 
                 // Update the display
                 callsDeflections.textContent = Math.round(callDeflectionsSavings).toLocaleString();
                 ahtImprovement.textContent = Math.round(ahtSavings).toLocaleString();
                 fcrImprovement.textContent = Math.round(fcrSavings).toLocaleString();
                 reducedTR.textContent = Math.round(trSavings).toLocaleString();
+                hardwareOptimization.textContent = Math.round(hardwareSavings).toLocaleString();
+                revenueEnhancement.textContent = Math.round(revenueSavings).toLocaleString();
+                churnReduction.textContent = Math.round(churnSavings).toLocaleString();
                 totalSavings.textContent = Math.round(total).toLocaleString();
+                
+                // Update ROI timeline
+                // Assume implementation cost is roughly 10% of annual savings
+                const implementationCost = total * 0.1;
+                const monthlyBenefit = total / 12;
+                const breakEvenMonths = implementationCost / monthlyBenefit;
+                
+                let roiPercent = Math.min(100, (12 / breakEvenMonths) * 100);
+                timelineProgress.style.width = roiPercent + '%';
+                
+                if (breakEvenMonths <= 1) {
+                    roiMessage.textContent = `Breakeven in less than 1 month, with ${Math.round(total / implementationCost)}x ROI in first year.`;
+                } else if (breakEvenMonths <= 3) {
+                    roiMessage.textContent = `Breakeven in ${breakEvenMonths.toFixed(1)} months, with strong first-quarter results.`;
+                } else if (breakEvenMonths <= 6) {
+                    roiMessage.textContent = `Breakeven in ${breakEvenMonths.toFixed(1)} months, with positive mid-year ROI.`;
+                } else if (breakEvenMonths <= 12) {
+                    roiMessage.textContent = `Breakeven in ${breakEvenMonths.toFixed(1)} months, with positive first-year ROI.`;
+                } else {
+                    roiMessage.textContent = `Long-term investment with multi-year benefits. Consider adjusting parameters for faster ROI.`;
+                }
             }
         });
     </script>
